@@ -1,0 +1,15 @@
+defaults:
+  - override hydra/sweeper: basic
+
+Dataset: &Dataset
+  n_feat: 1
+  e_feat: 8
+  n_class: 112
+
+
+NN: &NN
+  learning_rate: 0.01
+  weight_decay: 0.
+  n_hid: 256
+  n_layer: 3
+  dropout: 0.
