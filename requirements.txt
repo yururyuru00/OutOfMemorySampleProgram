@@ -1,0 +1,9 @@
+###### Requirements with Version Specifiers ######`
+torch
+torch-cluster    
+torch-scatter    
+torch-sparse     
+torch-spline-conv
+torch-geometric  
+ogb
+hydra

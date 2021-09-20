@@ -1,7 +1,5 @@
-import numpy as np
 import hydra
 from omegaconf import DictConfig
-from tqdm import tqdm
 from hydra import utils
 
 import torch
@@ -56,7 +54,7 @@ def run(cfg, data_loader, device):
                                  weight_decay = cfg['weight_decay'])
     evaluator = Evaluator('ogbn-proteins')
 
-    for epoch in tqdm(range(1, cfg['epochs'])):
+    for epoch in range(1, cfg['epochs']):
         train(epoch, cfg, train_loader, model, optimizer, device)
     test_acc = test(cfg, test_loader, model, evaluator, device)
 
@@ -92,11 +90,12 @@ def main(cfg: DictConfig):
     test_loader = RandomNodeSampler(data, num_parts=5, num_workers=5)
     data_loader = [train_loader, test_loader]
 
-    test_acc = np.zeros(cfg['n_tri'])
-    for tri in range(cfg['n_tri']):
-        test_acc[tri] = run(cfg, data_loader, device)
+    acces = []
+    for _ in range(cfg['n_tri']):
+        acc = run(cfg, data_loader, device)
+        acces.append(acc)
 
-    return np.mean(test_acc)
+    return sum(acces) / len(acces)
     
 
 if __name__ == "__main__":
